@@ -1,0 +1,6 @@
+bin
+build
+lib/linux/debug
+lib/linux/release
+lib/linux/releasedbg
+.xmake
