@@ -15,6 +15,7 @@ struct BaseErrcCategory : std::error_category {
         switch (static_cast<BaseErrc>(ev)) {
             case BaseErrc::ReInitialization:   return "Repeat initialization";
             case BaseErrc::CreateSocketFailed: return "Create socket failed";
+            case BaseErrc::InvalidSocketFile:  return "Socket file is invalid";
             case BaseErrc::BusySocketFile:     return "Socket file is busy";
             case BaseErrc::BindFailed:         return "Bind socket file failed";
             case BaseErrc::NotInitialized:     return "Not initialized";

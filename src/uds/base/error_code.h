@@ -17,6 +17,7 @@ namespace uds {
 enum class BaseErrc {
     ReInitialization = 1,
     CreateSocketFailed,
+    InvalidSocketFile,
     BusySocketFile,
     BindFailed,
     NotInitialized,

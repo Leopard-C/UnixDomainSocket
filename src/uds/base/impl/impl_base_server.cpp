@@ -49,6 +49,10 @@ void ImplBaseServer::Init(const std::string& socket_file, size_t thread_pool_siz
         ec = make_error_code(BaseErrc::ReInitialization);
         return;
     }
+    if (socket_file.size() >= sizeof(sockaddr_un::sun_path)) {
+        ec = make_error_code(BaseErrc::InvalidSocketFile);
+        return;
+    }
 
     if (thread_pool_size == 0) {
         thread_pool_size = std::thread::hardware_concurrency();
@@ -110,6 +114,8 @@ void ImplBaseServer::Start() {
         if (!packet) {
             packet = new Packet();
         }
+        client_addr_length = sizeof(client_addr);
+        memset(&client_addr, 0, client_addr_length);
         if (util::recv_data(fd_, &read_fds, packet, &client_addr, &client_addr_length)) {
             ProcessRequestPacket(client_addr, packet);
         }

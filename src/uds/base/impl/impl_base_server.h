@@ -62,7 +62,19 @@ public:
      */
     bool SendResponse(const sockaddr_un& client_addr, int64_t request_id, const std::string& data);
 
-    using RequestCallback = std::function<void(BaseServer*, const sockaddr_un&, int64_t, const std::string&)>;
+    /**
+     * @brief 收到请求后的回调函数.
+     * 
+     * @details 如果需要发送响应给客户端，可以调用`server->SendResponse()`方法.
+     * 
+     * @param server 当前服务器指针
+     * @param client_addr 请求方地址
+     * @param request_id 请求ID(客户端指定)
+     * @param data 请求内容
+     */
+    using RequestCallback = std::function<void(
+        BaseServer* server, const sockaddr_un& client_addr, int64_t request_id, const std::string& data
+    )>;
     void set_request_callback(RequestCallback callback) { request_callback_ = callback; }
 
     const std::string& socket_file() const { return socket_file_; }

@@ -43,6 +43,10 @@ void ImplBaseClient::Init(const std::string& server_socket_file, const std::stri
         ec = make_error_code(BaseErrc::ReInitialization);
         return;
     }
+    if (server_socket_file.size() >= sizeof(sockaddr_un::sun_path) || client_socket_file.size() >= sizeof(sockaddr_un::sun_path)) {
+        ec = make_error_code(BaseErrc::InvalidSocketFile);
+        return;
+    }
 
     /* 创建套接字 */
     fd_ = ::socket(AF_UNIX, SOCK_DGRAM, 0);
